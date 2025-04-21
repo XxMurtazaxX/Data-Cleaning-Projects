@@ -65,5 +65,17 @@ set SoldAsVacant =
 		else SoldAsVacant
 	end
 
-------------------------------------------------------------------------
+-- Filling column `OWNER ADDRESS` missing values --
 
+select propertyAddress, len(propertyAddress), len(trim(propertyAddress))
+from NashvilleHousing
+where UniqueID in (56469 , 56470)
+
+select PropertyAddress from NashvilleHousing
+group by PropertyAddress
+
+select PropertyAddress, SUBSTRING(OwnerAddress, 1, len(OwnerAddress) - 4) 'owner address' from NashvilleHousing
+where ownerAddress is null
+where propertyAddress = SUBSTRING(OwnerAddress, 1, len(OwnerAddress) - 4)
+
+select * from NashvilleHousing
